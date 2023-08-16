@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 
 import java.io.*;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.Map;
 import java.util.stream.Collectors;
 import javax.servlet.ServletConfig;
@@ -24,6 +25,7 @@ public class HelloServlet extends HttpServlet {
         //testRequest(request);
         //testConfig();
         test_cookie(request, response);
+        testSession(request,response);
 
 
         // Hello
@@ -93,6 +95,18 @@ public class HelloServlet extends HttpServlet {
             visit_time.setMaxAge(2);
             response.addCookie(visit_time);
         }
+    }
+
+    // session 和 cookie 的主要区别在于 session 将数据保存在服务端. 给客户返回 id
+    // 其实还是将数据存在数据库中比较合适，数据直接存session还是有点浪费了
+    // cookie 将数据保存在客户端，客户端每次请求都自己将参数传一下
+    void testSession(HttpServletRequest request,HttpServletResponse response){
+        HttpSession session = request.getSession();
+        if (session.isNew()){
+            print("new user");
+        }
+        print(session.getAttribute("last_visit"));
+        session.setAttribute("last_visit",new Date());
     }
 
     void print(Object o) {
