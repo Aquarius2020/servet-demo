@@ -1,6 +1,11 @@
 package com.example.tomcat_demo;
 
+import com.google.gson.Gson;
+
 import java.io.*;
+import java.util.Arrays;
+import java.util.Map;
+import java.util.stream.Collectors;
 import javax.servlet.ServletConfig;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
@@ -18,6 +23,7 @@ public class HelloServlet extends HttpServlet {
 
         testRequest(request);
         testConfig();
+        test_cookie(request, response);
 
 
         // Hello
@@ -65,6 +71,23 @@ public class HelloServlet extends HttpServlet {
         print(config.getServletContext());
         print(config.getInitParameterNames());
         print(config.getInitParameter("map_key"));
+    }
+
+    void test_cookie(HttpServletRequest request, HttpServletResponse response) {
+        Cookie[] cookies = request.getCookies();
+        if (cookies == null) {
+            cookies = new Cookie[0];
+        }
+        // 设置了 cookie 第二次访问就可以拿得到.
+        // cookie 是 http 协议的一部分
+        Map<String, Cookie> cookieMap = Arrays.stream(cookies).collect(Collectors.toMap(Cookie::getName, x -> x));
+        print(cookieMap.get("passwd"));
+        if (cookieMap.get("passwd") == null) {
+            Cookie cookie = new Cookie("passwd", "12345");
+            cookie.setMaxAge(30);
+            response.addCookie(cookie);
+            print("set cookie");
+        }
     }
 
     void print(Object o) {
