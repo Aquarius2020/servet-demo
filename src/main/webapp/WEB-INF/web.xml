@@ -34,4 +34,9 @@
         <url-pattern>/*</url-pattern>
     </filter-mapping>
 
+    <listener>
+        <description>my_first_listener</description>
+        <listener-class>com.example.tomcat_demo.listener.MyServletListener</listener-class>
+    </listener>
+
 </web-app>
