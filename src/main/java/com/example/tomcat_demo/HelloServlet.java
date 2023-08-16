@@ -1,6 +1,7 @@
 package com.example.tomcat_demo;
 
 import java.io.*;
+import javax.servlet.ServletConfig;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 
@@ -9,12 +10,14 @@ public class HelloServlet extends HttpServlet {
     private String message;
 
     public void init() {
+        // 初次调用会 set_config 和 调用 init
         message = "Hello World!";
     }
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
         testRequest(request);
+        testConfig();
 
 
         // Hello
@@ -26,7 +29,7 @@ public class HelloServlet extends HttpServlet {
     }
 
     void testRequest(HttpServletRequest request) {
-
+        print("/* testRequest */");
         print("/* 获取客户机信息 */");
         print(request.getMethod());       // get,post 等
         print(request.getProtocol());     // 协议+版本
@@ -55,6 +58,14 @@ public class HelloServlet extends HttpServlet {
         print(request.getQueryString());    // 请求参数
     }
 
+    void testConfig() {
+        print("/* testConfig */");
+        ServletConfig config = getServletConfig();
+        print(config.getServletName());
+        print(config.getServletContext());
+        print(config.getInitParameterNames());
+        print(config.getInitParameter("map_key"));
+    }
 
     void print(Object o) {
         System.out.println(o);
