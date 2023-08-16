@@ -15,6 +15,8 @@ public class VisitTimeFilter implements Filter {
     public void init(FilterConfig filterConfig) throws ServletException {
         // 第一次调用的时候初始化
         this.filterConfig = filterConfig;
+        System.out.println(filterConfig.getFilterName());
+        System.out.println(filterConfig.getInitParameterNames());
         System.out.println("HelloFilter init");
     }
 
