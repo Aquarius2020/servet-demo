@@ -7,17 +7,27 @@
     <servlet>
         <servlet-name>my_hello</servlet-name>
         <servlet-class>com.example.tomcat_demo.HelloServlet</servlet-class>
-        
+
         <init-param>
             <param-name>map_key</param-name>
             <param-value>这个就是一个 kv 键值对</param-value>
         </init-param>
-        
+
     </servlet>
 
     <servlet-mapping>
         <servlet-name>my_hello</servlet-name>
         <url-pattern>/hello</url-pattern>
     </servlet-mapping>
+
+    <filter>
+        <filter-name>my_filter</filter-name>
+        <filter-class>com.example.tomcat_demo.filter.VisitTimeFilter</filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>my_filter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
 
 </web-app>

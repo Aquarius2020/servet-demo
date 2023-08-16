@@ -21,8 +21,8 @@ public class HelloServlet extends HttpServlet {
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
-        testRequest(request);
-        testConfig();
+        //testRequest(request);
+        //testConfig();
         test_cookie(request, response);
 
 
@@ -87,6 +87,11 @@ public class HelloServlet extends HttpServlet {
             cookie.setMaxAge(30);
             response.addCookie(cookie);
             print("set cookie");
+        }
+        if (cookieMap.get("visit_time") == null) {
+            Cookie visit_time = new Cookie("visit_time", "2");
+            visit_time.setMaxAge(2);
+            response.addCookie(visit_time);
         }
     }
 
